@@ -25,7 +25,7 @@ import (
 	"go.viam.com/rdk/utils"
 )
 
-var model = resource.NewModel("viamlabs", "base", "intermode")
+var model = resource.NewModel("viamlabs", "tutorial", "intermode")
 
 // boilerplate to make this exist as a component.
 func init() {
