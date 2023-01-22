@@ -27,26 +27,12 @@ import (
 
 var model = resource.NewModel("viamlabs", "tutorial", "intermode")
 
-// boilerplate to make this exist as a component.
-func init() {
-	registry.RegisterComponent(
-		base.Subtype,
-		model,
-		registry.Component{Constructor: func(
-			ctx context.Context,
-			deps registry.Dependencies,
-			config config.Component,
-			logger golog.Logger,
-		) (interface{}, error) {
-			return newBase(config.Name, logger)
-		}})
-}
-
 func main() {
 	goutils.ContextualMain(mainWithArgs, golog.NewDevelopmentLogger("intermodeBaseModule"))
 }
 
 func mainWithArgs(ctx context.Context, args []string, logger golog.Logger) (err error) {
+	registerBase()
 	modalModule, err := module.NewModuleFromArgs(ctx, logger)
 
 	if err != nil {
@@ -62,6 +48,21 @@ func mainWithArgs(ctx context.Context, args []string, logger golog.Logger) (err 
 	}
 	<-ctx.Done()
 	return nil
+}
+
+// helper function to add the base's constructor and metadata to the component registry, so that we can later construct it.
+func registerBase() {
+	registry.RegisterComponent(
+		base.Subtype,
+		model,
+		registry.Component{Constructor: func(
+			ctx context.Context,
+			deps registry.Dependencies,
+			config config.Component,
+			logger golog.Logger,
+		) (interface{}, error) {
+			return newBase(config.Name, logger)
+		}})
 }
 
 // newBase creates a new base that underneath the hood sends canbus frames via
