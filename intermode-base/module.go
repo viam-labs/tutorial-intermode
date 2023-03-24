@@ -22,7 +22,6 @@ import (
 	"go.viam.com/rdk/module"
 	"go.viam.com/rdk/registry"
 	"go.viam.com/rdk/resource"
-	"go.viam.com/rdk/utils"
 )
 
 var model = resource.NewModel("viamlabs", "tutorial", "intermode")
@@ -318,7 +317,7 @@ func (base *interModeBase) Stop(ctx context.Context, extra map[string]interface{
 }
 
 func (base *interModeBase) IsMoving(ctx context.Context) (bool, error) {
-	return false, utils.NewUnimplementedInterfaceError((*interModeBase)(nil), "intermodeBase does not yet support IsMoving()")
+	return false, errors.New("IsMoving(): unimplemented")
 }
 
 // DoCommand executes additional commands beyond the Base{} interface. For this rover that includes door open and close commands.
